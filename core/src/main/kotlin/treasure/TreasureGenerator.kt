@@ -14,8 +14,8 @@ fun pick(diceResult: Int) : Treasure {
         diceResult == 1 -> Treasure("des pièces d'or", Dices.D6.roll().toString()+" PO")
         diceResult == 2 -> Treasure("des pièces d'or", Dices.DeuxD6.roll().toString()+" PO")
         diceResult == 3 -> Treasure("Un parchemin de sort", pickRandomSortilege(), true)
-        diceResult == 4 -> Treasure("Une gemme", "Valeur: "+ Dices.DeuxD6.roll()*5+" PO", true)
-        diceResult == 5 -> Treasure("Un bijoux", "Valeur: "+ Dices.TroisD6.roll()*10+" PO", true)
+        diceResult == 4 -> Treasure("Une gemme", "Valeur: "+ Dices.DeuxD6.roll()*5+" PO")
+        diceResult == 5 -> Treasure("Un bijoux", "Valeur: "+ Dices.TroisD6.roll()*10+" PO")
         else -> pickRandomMagicTreasure()
     }
 }
