@@ -22,6 +22,12 @@ enum class Dices {
             return D6.roll() + D6.roll() + D6.roll();
         }
     },
+    SixD6 {
+        override fun roll(): Int {
+            return TroisD6.roll() + TroisD6.roll()
+        }
+
+    },
     D6xD6 {
         override fun roll(): Int {
             return D6.roll() * D6.roll();
@@ -38,4 +44,7 @@ enum class Dices {
     internal fun roll(nbFaces: Int) = Random.nextInt(nbFaces) + 1
 
     abstract fun roll(): Int
+
 }
+
+

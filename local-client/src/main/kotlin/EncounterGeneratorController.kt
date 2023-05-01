@@ -19,8 +19,15 @@ class EncounterGeneratorController : Controller() {
 
     private fun toEnemy(enemies: Enemy): EnemyModel {
         return when (enemies) {
-            is MajorEnemy -> MajorEnemyModel(enemies.name, enemies.type.name, enemies.level,enemies.details, enemies.lives)
-            else -> MinorEnemyModel(enemies.name, enemies.type.name, enemies.level,enemies.details, enemies.number)
+            is MajorEnemy -> MajorEnemyModel(
+                enemies.name,
+                enemies.type.name,
+                enemies.level,
+                enemies.details,
+                enemies.lives,
+                enemies.reaction
+            )
+            else -> MinorEnemyModel(enemies.name, enemies.type.name, enemies.level,enemies.details, enemies.number, enemies.reaction)
         }
     }
 

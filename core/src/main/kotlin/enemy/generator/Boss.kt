@@ -19,7 +19,7 @@ fun getBoss(): Enemy {
                 "pas de test de moral"
             ),
             treasure = TreasureType(1 , +2),
-            reactions = listOf("Toujours se battre"),
+            reaction = "Se battre",
             lives = 4,
             2
         ),
@@ -31,7 +31,7 @@ fun getBoss(): Enemy {
             name = "Brute Orque",
             details = listOf("jamais d'objets magiques (remplacé par 2d6 x d6 PO)"),
             treasure = TreasureType(1 , +1),
-            reactions = listOf("1: soudoyer (50 PO)", "2-5: Se battre", "6: se battre jusqu'à la mort"),
+            reaction = reactionBruteOrque(),
             lives = 5,
             2
         ),
@@ -43,7 +43,7 @@ fun getBoss(): Enemy {
             name = "Ogre",
             details = listOf("Chaque coup infligé enlève 2 points de vie"),
             treasure = TreasureType.NORMAL,
-            reactions = listOf("1: soudoyer (30 PO)", "2-3: Se battre", "4-6: se battre jusqu'à la mort"),
+            reaction = reactionOgre(),
             lives = 5,
             1
         ),
@@ -59,7 +59,7 @@ fun getBoss(): Enemy {
                 "Benediction soigne les pétrifiés"
             ),
             treasure = TreasureType(1,+1),
-            reactions = listOf("1: soudoyer (6d6 PO)", "2: quête", "3-5: Se battre", "6: se battre jusqu'à la mort"),
+            reaction = reactionMedusa(),
             lives = 4,
             1
         ),
@@ -74,11 +74,45 @@ fun getBoss(): Enemy {
                 "A sa mort, sur 5 ou 6 sur un jet d6, un personnage trouve un indice"
             ),
             treasure = TreasureType(2, +1),
-            reactions = listOf("1: fuir si en sous nombre", "2: se battre", "3-6: Se battre jusqu'à la mort"),
+            reaction = reactionSeigneurChaos(),
             lives = 4,
             3
         )
     ).random()
+}
+
+fun reactionBruteOrque(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "Soudoyer (50 PO)"
+        2,3,4,5  -> "Se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
+
+}
+
+fun reactionOgre(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "Soudoyer (30 PO)"
+        2,3 -> "Se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
+}
+
+fun reactionMedusa(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "Soudoyer ("+Dices.SixD6+" PO)"
+        2 -> "quête"
+        3,4,5 -> "Se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
+}
+
+fun reactionSeigneurChaos(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "fuir si en sous nombre"
+        2 -> "se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
 }
 
 fun getDragon(): Enemy {
@@ -93,15 +127,19 @@ fun getDragon(): Enemy {
             "jamais rencontrés comme montres aléatoires"
         ),
         treasure = TreasureType(3, +1),
-        reactions = listOf(
-            "1: endormis (tous les personnages attaquent à +2 lors de leur 1ere attaque)",
-            "2-3: soudoyer (tout l'or du groupe à minimum 100PO, ou un objet magique)",
-            "4-5: se battre",
-            "6: quête"
-        ),
+        reaction = reactionDragon(),
         lives = 5,
         2
     )
+}
+
+fun reactionDragon(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "Endormis (Les personnages attaquent à +2 lors de leur 1ere attaque)"
+        2,3 -> "Soudoyer (tout l'or du groupe, 100 PO minimum) ou un objet magique"
+        4,5 -> "Se battre"
+        else -> "Quête"
+    }
 }
 
 

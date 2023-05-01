@@ -13,6 +13,7 @@ class MonsterView : View() {
     val enemyType: Label = label()
     val enemyLevel: Label = label()
     val enemyLives: Label = label()
+    val enemyReaction: Label = label()
     var majorBlock = hbox { }
     val enemyDetails: Label = label()
 
@@ -41,10 +42,23 @@ class MonsterView : View() {
                 label("Niveau: ")
                 add(enemyLevel)
             }
+            vbox {
+                hbox {
+                    label("Réaction:")
+                    button("Montrer") {
+                        action {
+                            enemyReaction.isVisible = true
+                        }
+                    }
+                }
+                add(enemyReaction)
+            }
+
             majorBlock = hbox {
                 label("PV: ")
                 add(enemyLives)
             }
+
             hbox {
                 label("Détails: ") {
                     style {
@@ -59,12 +73,15 @@ class MonsterView : View() {
         }
 
     fun update(enemy: EnemyModel?) {
+        enemyReaction.isVisible = false
+
         when (enemy) {
             is MinorEnemyModel -> {
                 enemyName.text = "${enemy.count} ${enemy.name}"
                 enemyType.text = enemy.type
                 enemyLevel.text = enemy.level.toString()
                 enemyDetails.text = format(enemy.details)
+                enemyReaction.text = enemy.reaction
                 majorBlock.isVisible = false
             }
             is MajorEnemyModel -> {
@@ -72,6 +89,7 @@ class MonsterView : View() {
                 enemyType.text = enemy.type
                 enemyLevel.text = enemy.level.toString()
                 enemyLives.text = enemy.lives.toString()
+                enemyReaction.text = enemy.reaction
                 enemyDetails.text = format(enemy.details)
                 majorBlock.isVisible = true
             }
@@ -81,6 +99,7 @@ class MonsterView : View() {
                 enemyLevel.text = ""
                 enemyLives.text = ""
                 enemyDetails.text = ""
+                enemyReaction.text = ""
                 majorBlock.isVisible = false
 
             }

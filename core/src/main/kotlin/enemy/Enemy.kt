@@ -4,7 +4,7 @@ import treasure.TreasureType
 
 open class Enemy(
     val type: EnemyType, val number: Int, val level: Int, val undead: Boolean, val bonusEcrasant: Boolean, val name: String,
-    val details: List<String>, val treasure: TreasureType, val reactions: List<String>
+    val details: List<String>, val treasure: TreasureType, val reaction: String
 ) {
 
     override fun toString(): String {

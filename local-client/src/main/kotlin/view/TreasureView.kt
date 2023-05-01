@@ -22,7 +22,7 @@ class TreasureView : View() {
                 padding = box(5.px)
                 fontSize = 15.px
             }
-            vbox {
+            hbox {
                 label("Trésors") {
                     style {
                         fontSize = 20.px

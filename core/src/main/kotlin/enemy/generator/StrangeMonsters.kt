@@ -16,7 +16,7 @@ fun getStrangeMonsters(): Enemy {
             name = "Minotaure",
             details = listOf("Le premier jet de défense contre un Minotaure se fait à -1 (charge de taureau)","Les Halfelins ne peuvent utiliser 'chance' (les minotaures adorent les dévorer)","pas de test de moral"),
             treasure = TreasureType.NORMAL,
-            reactions = listOf("1-2: soudoyer (60 PO)","3-4: se battre","5-6: se battre jusqu'à la mort"),
+            reaction = reactionMinotaure(),
             lives = 4,
             2
         )
@@ -28,7 +28,7 @@ fun getStrangeMonsters(): Enemy {
             name = "Dévoreur d'acier",
             details = listOf("Les bonus d'armure lourde ne s'appliquent pas sur les jets de défense","Si le monstre touche, le personnage ne prends pas de dégât mais perd son armure, son bouclier, son arme principale ou 3d6 PO, dans cet ordre"),
             treasure = TreasureType.NONE,
-            reactions = listOf("1: fuir","2-3: Soudoyer (d6 PO pour distraire la créature, hors 'or des fous')","4-6: se battre"),
+            reaction = reactionDevoreur(),
             lives = 4,
             3
         )
@@ -40,7 +40,7 @@ fun getStrangeMonsters(): Enemy {
             name = "Chimère",
             details = listOf("D6 à chaque tour de la chimère: si 1 ou 2, la chimère crache du feu (au lieu d'attaquer) et les personnages doivent réussir un jet de sauvegarde contre un feu niveau 4 ou perdre 1PV"),
             treasure = TreasureType.NORMAL,
-            reactions = listOf("1: Soudoyer (50 PO)","2-6: se battre"),
+            reaction = reactionChimera(),
             lives = 6,
             3
         )
@@ -52,7 +52,7 @@ fun getStrangeMonsters(): Enemy {
             name = "Catoblépas",
             details = listOf("Au début de la bataille, tous les personnages doivent réussir un jet de sauvegarde contre une attaque de regard niveau 4 ou perdre 1 PV"),
             treasure = TreasureType(1, +1),
-            reactions = listOf("1: fuir","2-6: se battre"),
+            reaction = reactionCatoblepas(),
             lives = 4,
             1
         )
@@ -64,7 +64,7 @@ fun getStrangeMonsters(): Enemy {
             name = "Araignée géante",
             details = listOf("Les personnages qui subissent une blessure doivent réussir un jet de sauvegarde contre un poison niveau 3 ou perdre 1pts de vie supplémentaire","à cause de la toile d'araignée, les personnages ne peuvent se désengager du combat, à moins de lancer le sort boule de feu pour bruler la toile"),
             treasure = TreasureType(2, 0),
-            reactions = listOf("Toujours se battre"),
+            reaction = "Se battre",
             lives = 3,
             2
         )
@@ -76,12 +76,41 @@ fun getStrangeMonsters(): Enemy {
             name = "Gremlins invisibles",
             details = listOf("Un groupe de gremlins invisibles volent D6+3 objets au groupe, dans cet ordre de préférence: objets magiques, parchemins, potions, armes, gemmes et pièces (en paquets de 10po)","Si les gremlins volent TOUT votre équipement, ils vous laisseront un message de remerciement sous forme d'indice"," pas de jet de PX"),
             treasure = TreasureType.NONE,
-            reactions = listOf("Toujours se battre"),
+            reaction = "Se battre",
             lives = 0,
             0
         )
         else -> throw java.lang.IllegalArgumentException("invalid dice result")
 
+    }
+}
+
+fun reactionDevoreur(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "Fuir"
+        2,3 -> "Soudoyer ("+ Dices.D6.roll()+" PO) hors or des fous"
+        else -> "se battre"
+    }
+}
+
+fun reactionCatoblepas(): String {
+    return when(Dices.D6.roll()) {
+        1 -> "Fuir"
+        else -> "se battre"
+    }
+}
+
+fun reactionMinotaure(): String {
+    return when(Dices.D6.roll()) {
+        1,2 -> "soudoyer (60 PO)"
+        3,4 -> "se battre"
+        else -> "se battre jusqu'à la mort"
+    }
+}
+fun reactionChimera(): String {
+    return when(Dices.D6.roll()) {
+        1,2 -> "soudoyer (50 PO)"
+        else -> "se battre"
     }
 }
 

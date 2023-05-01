@@ -12,7 +12,7 @@ fun getSbires(): Enemy {
                 name = "Squelettes",
                 details = listOf("attaques avec flèches à -1", "pas de test de moral"),
                 treasure = TreasureType.NONE,
-                reactions = listOf("toujours se battre jusqu'à la mort")
+                reaction = "Se battre jusqu'à la mort"
             )
             0 -> return Enemy(
                 EnemyType.SBIRES, Dices.D6.roll(), 3,
@@ -21,7 +21,7 @@ fun getSbires(): Enemy {
                 name = "Zombies",
                 details = listOf("attaques avec flèches à -1", "pas de test de moral"),
                 treasure = TreasureType.NONE,
-                reactions = listOf("toujours se battre jusqu'à la mort")
+                reaction = "Se battre jusqu'à la mort"
             )
         }
         2 -> return Enemy(
@@ -33,7 +33,7 @@ fun getSbires(): Enemy {
             name = "Gobelins",
             details = listOf("1 chance sur 6 de prendre le groupe par surprise. Si c'est le cas, effectuez un jet de réaction"),
             treasure = TreasureType(1,-1),
-            reactions = listOf("1: fuir si en sous nombre","2-3: soudoyer (5PO/gobelins)","4-6: se battre")
+            reaction = reactionGobelinsSbires()
         )
         3 -> return Enemy(
             type = EnemyType.SBIRES,
@@ -44,7 +44,7 @@ fun getSbires(): Enemy {
             name = "Hobgobelins",
             details = listOf(""),
             treasure = TreasureType(1, +1),
-            reactions = listOf("1: fuir si en sous nombre","2-3: Soudoyer (10 PO/ hobgobelins)","4-5: se battre", "6: se battre jusqu'à la mort")
+            reaction = reactionHobgobelins()
         )
         4 -> return Enemy(
             type = EnemyType.SBIRES,
@@ -55,7 +55,7 @@ fun getSbires(): Enemy {
             name = "Orcs",
             details = listOf("craignent la magie, doivent effectuer un jet de moral si l'un d'entre eux est tué par un sort","si en dessous de 50% suite à un sort, jet de moral à -1","Elfes attaquent (et lancent des sorts) à +1", "Les orcs n'ont pas d'objets magiques. Le cas échéant, à remplacer par d6xd6 PO"),
             treasure = TreasureType.NORMAL,
-            reactions = listOf("1-2: soudoyer (10 PO/orc)","3-5: se battre","6: se battre jusqu'à la mort")
+            reaction = reactionOrcs()
         )
         5 -> return Enemy(
             EnemyType.SBIRES, Dices.D3.roll(), 5,
@@ -64,7 +64,7 @@ fun getSbires(): Enemy {
             name = "Trolls",
             details = listOf("se régénèrent à moins d'être tué par un sort ou découpé en morceaux une fois mort (1 attaque). Lancez 1d6 pour chaque troll tué, si 5-6: le troll revient à la vie"),
             treasure = TreasureType.NORMAL,
-            reactions = listOf("1-2: se battre","3-6: se battre jusqu'à la mort")
+            reaction = reactionTrolls()
         )
         6 -> return Enemy(
             EnemyType.SBIRES, Dices.DeuxD6.roll(),
@@ -74,8 +74,48 @@ fun getSbires(): Enemy {
             name = "Champignhommes",
             details = listOf("tout personnage qui subit des dégâts du champignhommes doit effectuer un jet de sauvegarde contre un poison niveau 3 ou perdre 1 point de vie","les Halfelins ajoutent leur niveau à leur jet de sauvegarde"),
             treasure = TreasureType.NORMAL,
-            reactions = listOf("1-2: soudoyer (d6 /champignhomme)","3-6: se battre")
+            reaction = reactionChampis()
         )
     }
     throw java.lang.IllegalArgumentException("invalid dic result")
 }
+
+fun reactionGobelinsSbires(): String {
+    return when (Dices.D6.roll()) {
+        1 -> "Fuir si en sous nombre"
+        2,3 -> "Soudoyer (5 PO / gobelin)"
+        else -> "Se battre"
+    }
+}
+
+fun reactionHobgobelins(): String {
+    return when (Dices.D6.roll()) {
+        1 -> "Fuir si en sous nombre"
+        2,3 -> "Soudoyer (10 PO / Hobgobelins)"
+        4,5 -> "Se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
+}
+
+fun reactionOrcs(): String {
+    return when (Dices.D6.roll()) {
+        1, 2 -> "Soudoyer (10 PO / orc)"
+        3,5 -> "Se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
+}
+
+fun reactionTrolls(): String {
+    return when (Dices.D6.roll()) {
+        1, 2 -> "Se battre"
+        else -> "Se battre jusqu'à la mort"
+    }
+}
+
+fun reactionChampis(): String {
+    return when (Dices.D6.roll()) {
+        1, 2 -> "Soudoyer ("+ Dices.D6.roll()+" PO/champignhommes)"
+        else -> "se battre"
+    }
+}
+
