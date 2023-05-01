@@ -1,3 +1,5 @@
+package encounter
+
 import enemy.Enemy
 import enemy.generator.getBoss
 import enemy.generator.getDragon
@@ -5,8 +7,6 @@ import enemy.generator.getStrangeMonsters
 import enemy.getNuisibles
 import enemy.getSbires
 import room.Room
-import room.RoomType
-import room.RoomType.CORRIDOR
 import room.RoomType.LARGE_ROOM
 import treasure.generateTreasure
 

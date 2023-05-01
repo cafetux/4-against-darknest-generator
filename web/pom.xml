@@ -9,8 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>web</artifactId>
-
+    <artifactId>4aD-generator-web</artifactId>
+    <name>4aD-generator-web</name>
+    <description>a web-app to expose dungeon generation</description>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

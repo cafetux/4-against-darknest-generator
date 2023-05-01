@@ -1,3 +1,5 @@
+package encounter
+
 import enemy.Enemy
 import room.Room
 import treasure.Treasure
@@ -9,7 +11,7 @@ data class Encounter(val room: Room, val enemies: Enemy?, val treasure: List<Tre
     }
 
     override fun toString(): String {
-        return "Encounter(room=$room, enemies=$enemies, treasure=$treasure)"
+        return "encounter.Encounter(room=$room, enemies=$enemies, treasure=$treasure)"
     }
 
 
