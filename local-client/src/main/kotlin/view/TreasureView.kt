@@ -11,7 +11,7 @@ class TreasureView : View() {
 
 
     private val treasures: Label = label()
-    private val showTreasures : Button = button()
+    private var showTreasures : Button = button()
 
     override val root =
         vbox {
@@ -29,9 +29,10 @@ class TreasureView : View() {
                         fontWeight = FontWeight.BOLD
                     }
                 }
-                button("Montrer") {
+                showTreasures = button("Montrer") {
                     action {
                         treasures.isVisible = true
+                        showTreasures.hide()
                     }
                 }
             }
@@ -42,10 +43,16 @@ class TreasureView : View() {
     fun update(treasures: List<TreasureModel>) {
         if(treasures.isEmpty()) {
             this.treasures.text = "Aucun"
-            this.showTreasures.isVisible = false
+            this.showTreasures.hide()
         } else {
+            this.showTreasures.show()
             this.treasures.isVisible = false
             this.treasures.text = treasures.joinToString { "\n -${it.name}:${it.description} (magique:${it.isMagic})" }
         }
+    }
+
+    fun show() {
+        this.showTreasures.hide()
+        this.treasures.isVisible = true
     }
 }

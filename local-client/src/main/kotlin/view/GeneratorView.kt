@@ -10,6 +10,7 @@ class GeneratorView : View("Dungeon Room") {
     val roomView = find<RoomView>()
     val monsterView = find<MonsterView>()
     val treasureView = find<TreasureView>()
+    val trapView = find<TrapView>()
 
     override val root = vbox {
         style {
@@ -30,7 +31,10 @@ class GeneratorView : View("Dungeon Room") {
 
                     top = roomView.root
 
-                    center = monsterView.root
+                    center = vbox {
+                        add(monsterView.root)
+                        add(trapView.root)
+                    }
 
                     bottom = treasureView.root
 
@@ -43,6 +47,10 @@ class GeneratorView : View("Dungeon Room") {
                             roomView.update(result.room)
                             monsterView.update(result.enemy)
                             treasureView.update(result.treasures)
+                            if (result.enemy == null) {
+                                treasureView.show()
+                            }
+                            trapView.update(result.trap)
                         }
                     }
                 }

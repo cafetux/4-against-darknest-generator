@@ -8,6 +8,10 @@ import enemy.getNuisibles
 import enemy.getSbires
 import room.Room
 import room.RoomType.LARGE_ROOM
+import trap.Trap
+import trap.generateTrap
+import treasure.Treasure
+import treasure.TreasureType
 import treasure.generateTreasure
 
 class EncounterGenerator {
@@ -26,9 +30,20 @@ class EncounterGenerator {
         }
 
         return if(enemies == null) {
-            Encounter(room, null, listOf())
+            val treasures = when(diceResult) {
+                2, 3 -> generateTreasure(TreasureType.NORMAL)
+                else -> listOf()
+            }
+            Encounter(room, treasures,null, trap(diceResult))
         } else {
-            Encounter(room, enemies, generateTreasure(enemies.treasure))
+            Encounter(room, generateTreasure(enemies.treasure), enemies)
+        }
+    }
+
+    private fun trap(diceResult: Int): Trap? {
+        return when(diceResult) {
+            3 -> generateTrap()
+            else -> null
         }
     }
 

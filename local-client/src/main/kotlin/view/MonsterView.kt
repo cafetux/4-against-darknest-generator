@@ -3,11 +3,14 @@ package view
 import EnemyModel
 import MajorEnemyModel
 import MinorEnemyModel
+import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class MonsterView : View() {
+
+    private lateinit var showReaction: Button
 
     val enemyName: Label = label()
     val enemyType: Label = label()
@@ -45,14 +48,17 @@ class MonsterView : View() {
             vbox {
                 hbox {
                     label("Réaction:")
-                    button("Montrer") {
+                    showReaction = button("Montrer") {
                         action {
-                            enemyReaction.isVisible = true
+                            enemyReaction.show()
+                            showReaction.hide()
                         }
                     }
                 }
                 add(enemyReaction)
             }
+
+            showReaction.hide()
 
             majorBlock = hbox {
                 label("PV: ")
@@ -73,7 +79,9 @@ class MonsterView : View() {
         }
 
     fun update(enemy: EnemyModel?) {
-        enemyReaction.isVisible = false
+        this.enemyReaction.hide()
+        this.root.show()
+        showReaction.show()
 
         when (enemy) {
             is MinorEnemyModel -> {
@@ -82,7 +90,7 @@ class MonsterView : View() {
                 enemyLevel.text = enemy.level.toString()
                 enemyDetails.text = format(enemy.details)
                 enemyReaction.text = enemy.reaction
-                majorBlock.isVisible = false
+                majorBlock.hide()
             }
             is MajorEnemyModel -> {
                 enemyName.text = enemy.name
@@ -91,7 +99,7 @@ class MonsterView : View() {
                 enemyLives.text = enemy.lives.toString()
                 enemyReaction.text = enemy.reaction
                 enemyDetails.text = format(enemy.details)
-                majorBlock.isVisible = true
+                majorBlock.show()
             }
             else -> {
                 enemyName.text = "Aucun"
@@ -100,8 +108,9 @@ class MonsterView : View() {
                 enemyLives.text = ""
                 enemyDetails.text = ""
                 enemyReaction.text = ""
-                majorBlock.isVisible = false
-
+                majorBlock.hide()
+                this.root.hide()
+                showReaction.hide()
             }
         }
     }

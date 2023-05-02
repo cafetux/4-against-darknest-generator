@@ -22,6 +22,17 @@ class EncounterGeneratorTest {
             }
         }
     }
+    @Test
+    fun should_not_find_treasure_without_enemies_when_some_values() {
+
+        for (type in listOf(CORRIDOR, LARGE_ROOM)) {
+            for (diceRoll in listOf(2, 3)) {
+                val result = generator.generate(room(type), diceRoll)
+                assertThat(result.enemies).`as`("should not has enemies for dice $diceRoll on $type").isNull()
+                assertThat(result.treasure).`as`("should has treasure for dice $diceRoll on $type").isNotNull()
+            }
+        }
+    }
 
     @Test
     fun should_find_sbires_when_7() {

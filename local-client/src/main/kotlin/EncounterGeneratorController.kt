@@ -2,6 +2,7 @@ import encounter.Encounter
 import enemy.Enemy
 import enemy.MajorEnemy
 import tornadofx.Controller
+import trap.Trap
 
 class EncounterGeneratorController : Controller() {
     val roomEncounterGenerator = RoomEncounterGenerator()
@@ -13,8 +14,12 @@ class EncounterGeneratorController : Controller() {
         return if (enemies != null) {
             EncounterModel(toRoom(room), toEnemy(enemies), treasures)
         } else {
-            EncounterModel(toRoom(room))
+            EncounterModel(toRoom(room),null, treasures, trap(room.trap))
         }
+    }
+
+    private fun trap(trap: Trap?): TrapModel? {
+        return trap?.let { TrapModel(it.name, trap.level, trap.description) }
     }
 
     private fun toEnemy(enemies: Enemy): EnemyModel {
